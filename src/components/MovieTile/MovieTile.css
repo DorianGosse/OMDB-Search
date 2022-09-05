@@ -1,9 +1,11 @@
 .movie-tile-container {
-  background-color: grey;
+  background-color: #090909;
   border-radius: 15px;
-  height: 450px;
-  max-height: max-content;
-  
+  height: 100%;
+  flex-direction: column;
+  position: relative;
+
+  color: #ffffff;
 }
 
 .movie-tile-container img {
@@ -13,4 +15,9 @@
 
 .movie-tile-container .row {
   padding-bottom: 20px;
+}
+
+.movie-tile-btn-row {
+  position: absolute;
+  bottom: 0;
 }

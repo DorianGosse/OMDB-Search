@@ -4,8 +4,7 @@ import { Button as BootstrapButton } from 'react-bootstrap'
 import './Button.css'
 
 const classNameByType = {
-  search: 'search',
-  moiveBtn: 'movie-result-btn'
+  search: 'search'
 }
 
 export const Button = ({ label, type, ...props}) => (

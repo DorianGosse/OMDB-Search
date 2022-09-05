@@ -16,14 +16,17 @@ const MovieSearch = ({}) => {
   const [movieResults, setMovieResults] = useState([])
   const [resultsPage, setResultsPage] = useState(1)
   const [showingAllResults, setShowingAllResults] = useState(true)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const handleSearchTermChange = async (searchTerm) => {
     setSearchTerm(searchTerm)
+    searchTerm.length > 1 && setLoading(true)
     searchTerm.length > 1 && await getMoviesByName(searchTerm, 1).then(result => {
+      if (typeof result.Search === 'undefined') return
       setMovieResults(result.Search ? result.Search : [])
       result.Search.length === resultsPage * 10 ? setShowingAllResults(false) : setShowingAllResults(true)
     })
+    setLoading(false)
   }
 
   const handleClearOnClick = () => {
@@ -36,6 +39,7 @@ const MovieSearch = ({}) => {
     setResultsPage(resultsPage + 1)
     if (movieResults.length === resultsPage * 10) {
       await getMoviesByName(searchTerm, resultsPage + 1).then(result => {
+        if (typeof result.Search === 'undefined') return
         setMovieResults([...movieResults, ...result.Search])
         result.Search.length === 10 ? setShowingAllResults(false) : setShowingAllResults(true)
       })
@@ -44,31 +48,31 @@ const MovieSearch = ({}) => {
 
   const createSearchBox = () => (
     <>
-      <Row>
-        <Col> <Input placeholder='Seach movies by title' onChange={e => handleSearchTermChange(e.target.value)} value={searchTerm || ''}/> </Col>
-        <Col className='text-start'> <Button label='clear' onClick={() => handleClearOnClick()} /> </Col>
+      <Row className='justify-content-center'>
+        <Col lg={3} md={6} className='d-flex'>
+          <Input placeholder='Seach movies by title' onChange={e => handleSearchTermChange(e.target.value)} value={searchTerm || ''}/>
+          <Button label='clear' type='search' onClick={() => handleClearOnClick()} />
+        </Col>
       </Row>
-      <Row> <Col className='text-start'> {searchTerm.length && movieResults.length === 0 ? 'No Results' : null} </Col> </Row>
+      <Row className='pb-4'> <Col className='text-start'> {searchTerm.length && movieResults.length === 0 ? 'No Results' : null} </Col> </Row>
     </>
   )
 
   const createResultDisplay = () => (
-    <Row>
-      {movieResults.length && movieResults.map(mov => (
-        <Col lg={3} mb={4} sm={4}> <MovieTile movieObj={mov} /> </Col>
-      ))}
+    <Row className='results-row p-0'>
+      {movieResults.length && !loading ? movieResults.map(mov => (
+        <Col className='p-3 result-col d-table-cell' lg={3} mb={4} sm={4}> <MovieTile movieObj={mov} /> </Col>
+      )) : null}
     </Row>
   )
 
-  console.log('movieResult', movieResults)
-  console.log('showing all results', showingAllResults)
-  
   return (
     <Container fluid>
       <Row className='pt-3 pb-3'> <PageHeader text='Search Movies' /> </Row>
       {createSearchBox()}
-      <Row> {createResultDisplay()} </Row>
-      <Row> <Col> <Button label='loadMore' onClick={() => handleLoadMoreClick()} disabled={showingAllResults}/> </Col> </Row>
+      { loading ? <Row className='p-5'> <Col> <Spinner animation="border" variant='primary'> </Spinner> </Col> </Row> : null}
+      {createResultDisplay()}
+      <Row className='pb-3'> <Col> <Button label='Load More' onClick={() => handleLoadMoreClick()} disabled={showingAllResults}/> </Col> </Row>
     </Container>
   )
 }
