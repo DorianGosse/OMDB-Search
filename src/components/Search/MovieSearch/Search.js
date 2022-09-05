@@ -66,13 +66,23 @@ const MovieSearch = ({}) => {
     </Row>
   )
 
+  const createLoadMoreBtn = () => (
+    <>
+      {
+        showingAllResults
+          ? null
+          : <Row className='pb-3'> <Col> <Button label='Load More' onClick={() => handleLoadMoreClick()} disabled={showingAllResults}/> </Col> </Row>
+      }
+    </>
+  )
+
   return (
     <Container fluid>
       <Row className='pt-3 pb-3'> <PageHeader text='Search Movies' /> </Row>
-      {createSearchBox()}
+      { createSearchBox() }
       { loading ? <Row className='p-5'> <Col> <Spinner animation="border" variant='primary'> </Spinner> </Col> </Row> : null}
-      {createResultDisplay()}
-      <Row className='pb-3'> <Col> <Button label='Load More' onClick={() => handleLoadMoreClick()} disabled={showingAllResults}/> </Col> </Row>
+      { searchTerm.length > 1 ? createResultDisplay() : null }
+      { createLoadMoreBtn() }
     </Container>
   )
 }
