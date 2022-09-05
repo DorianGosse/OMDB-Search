@@ -1,0 +1,16 @@
+.movie-tile-container {
+  background-color: grey;
+  border-radius: 15px;
+  height: 450px;
+  max-height: max-content;
+  
+}
+
+.movie-tile-container img {
+  width: 50%;
+  height: auto;
+}
+
+.movie-tile-container .row {
+  padding-bottom: 20px;
+}
