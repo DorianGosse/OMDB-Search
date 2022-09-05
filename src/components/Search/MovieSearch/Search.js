@@ -76,8 +76,6 @@ const MovieSearch = ({}) => {
     </>
   )
 
-  console.log('movieResults', movieResults)
-
   return (
     <Container fluid>
       <Row className='pt-3 pb-3'> <PageHeader text='Search Movies' /> </Row>
