@@ -54,7 +54,7 @@ const MovieSearch = ({}) => {
           <Button label='clear' type='search' onClick={() => handleClearOnClick()} />
         </Col>
       </Row>
-      <Row className='pb-4'> <Col className='text-start'> {searchTerm.length && movieResults.length === 0 ? 'No Results' : null} </Col> </Row>
+      <Row className='pb-4'> <Col className='text-center'> {searchTerm.length && movieResults.length === 0 ? 'No Results' : null} </Col> </Row>
     </>
   )
 
