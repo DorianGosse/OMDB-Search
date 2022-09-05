@@ -61,7 +61,7 @@ const MovieSearch = ({}) => {
   const createResultDisplay = () => (
     <Row className='results-row p-0'>
       {movieResults.length && !loading ? movieResults.map(mov => (
-        <Col className='p-3 result-col d-table-cell' lg={3} mb={4} sm={4}> <MovieTile movieObj={mov} /> </Col>
+        <Col className='p-3 result-col' lg={3} mb={4} sm={4}> <MovieTile movieObj={mov} /> </Col>
       )) : null}
     </Row>
   )
@@ -75,6 +75,8 @@ const MovieSearch = ({}) => {
       }
     </>
   )
+
+  console.log('movieResults', movieResults)
 
   return (
     <Container fluid>
